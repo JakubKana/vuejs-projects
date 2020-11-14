@@ -1,12 +1,21 @@
 <template>
   <div>
     <section class="row">
-      <health-bar :health="playerHealth" :isAttack="isAttack" :isHeal="isHeal" :title="labels.you" />
-      <health-bar :health="monsterHealth" :isAttack="isAttack" :title="labels.monster" />
+      <health-bar
+        :health="playerHealth"
+        :isAttack="isAttack"
+        :isHeal="isHeal"
+        :title="labels.you"
+      />
+      <health-bar
+        :health="monsterHealth"
+        :isAttack="isAttack"
+        :title="labels.monster"
+      />
     </section>
     <section class="row controls" v-if="!gameIsRunning">
       <div class="small-12 columns">
-         <button-item
+        <button-item
           id="start-game"
           :callback="startGame"
           v-bind:label="labels.startGame"
@@ -25,11 +34,7 @@
           :callback="specialAttack"
           v-bind:label="labels.specialAttack"
         />
-        <button-item
-          id="heal"
-          :callback="heal"
-          v-bind:label="labels.heal"
-        />
+        <button-item id="heal" :callback="heal" v-bind:label="labels.heal" />
         <button-item
           id="give-up"
           :callback="giveUp"
@@ -60,26 +65,28 @@
 import Button from "./components/Button.vue";
 import HealthBar from "./components/HealthBar.vue";
 export default {
-  data: {
-    playerHealth: 100,
-    monsterHealth: 100,
-    isAttack: false,
-    isHeal: false,
-    gameIsRunning: false,
-    turns: [],
-    labels: {
-      attack: "ATTACK",
-      specialAttack: "SPECIAL ATTACK",
-      heal: "HEAL",
-      giveUp: "GIVE UP",
-      you: "YOU",
-      monster: "MONSTER",
-      startGame: "START NEW GAME"
-    },
+  data: function () {
+    return {
+      playerHealth: 100,
+      monsterHealth: 100,
+      isAttack: false,
+      isHeal: false,
+      gameIsRunning: false,
+      turns: [],
+      labels: {
+        attack: "ATTACK",
+        specialAttack: "SPECIAL ATTACK",
+        heal: "HEAL",
+        giveUp: "GIVE UP",
+        you: "YOU",
+        monster: "MONSTER",
+        startGame: "START NEW GAME",
+      },
+    };
   },
   components: {
     "button-item": Button,
-    "health-bar": HealthBar
+    "health-bar": HealthBar,
   },
   methods: {
     startGame: function () {
@@ -105,7 +112,7 @@ export default {
     specialAttack: function () {
       var damage = this.calculateDamage(10, 20);
       this.monsterHealth -= damage;
-       this.setAttack();
+      this.setAttack();
       this.turns.unshift({
         isPlayer: true,
         text: `Player hits Monster hard for ${damage}`,
@@ -121,7 +128,7 @@ export default {
       } else {
         this.playerHealth = 100;
       }
-      this.setHeal();;
+      this.setHeal();
       this.turns.unshift({
         isPlayer: true,
         text: `Player heals for ${10}`,
@@ -130,7 +137,7 @@ export default {
     },
     giveUp: function () {
       this.gameIsRunning = false;
-        this.turns.unshift({
+      this.turns.unshift({
         isPlayer: true,
         text: `Player gave up! Game over!`,
       });
@@ -165,22 +172,22 @@ export default {
       }
       return false;
     },
-    setAttack: function() {
-       var vm = this;
+    setAttack: function () {
+      var vm = this;
       this.isAttack = true;
 
       setTimeout(function () {
         vm.isAttack = false;
       }, 1000);
     },
-     setHeal: function() {
-        var vm = this;
+    setHeal: function () {
+      var vm = this;
       this.isHeal = true;
 
       setTimeout(function () {
         vm.isHeal = false;
       }, 1000);
-    }
+    },
   },
 };
 </script>

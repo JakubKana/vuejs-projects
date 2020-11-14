@@ -5,9 +5,7 @@
 export default {
   props: ["callback", "label"],
   data: function () {
-    return {
-      label: this.label,
-    };
+    return {};
   },
 };
 </script>

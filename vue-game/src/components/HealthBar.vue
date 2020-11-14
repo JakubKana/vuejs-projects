@@ -15,14 +15,9 @@
 </template>
 <script>
 export default {
-props: ["health","isHeal", "isAttack", "title"],
+props: ["health", "isHeal", "isAttack", "title"],
   data: function () {
-    return {
-      title: this.title,
-      isHeal: this.isHeal,
-      isAttack: this.isAttack,
-      health: this.health
-    };
+    return {};
   },
 }
 </script>
