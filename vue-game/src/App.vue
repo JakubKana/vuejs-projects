@@ -1,36 +1,16 @@
 <template>
   <div>
     <section class="row">
-      <div class="small-6 columns">
-        <h1 class="text-center">YOU</h1>
-        <div class="healthbar">
-          <div
-            class="healthbar text-center"
-            :class="[{ highlight: isAttack }, { heal: isHeal}]"
-            :style="{ width: playerHealth + '%' }"
-            style="background-color: green; margin: 0; color: white"
-          >
-            {{ playerHealth }}
-          </div>
-        </div>
-      </div>
-      <div class="small-6 columns">
-        <h1 class="text-center">UGLY MONSTER</h1>
-        <div class="healthbar">
-          <div
-            class="healthbar text-center"
-            :class="{ highlight: isAttack}"
-            :style="{ width: monsterHealth + '%' }"
-            style="background-color: green; margin: 0; color: white"
-          >
-            {{ monsterHealth }}
-          </div>
-        </div>
-      </div>
+      <health-bar :health="playerHealth" :isAttack="isAttack" :isHeal="isHeal" :title="labels.you" />
+      <health-bar :health="monsterHealth" :isAttack="isAttack" :title="labels.monster" />
     </section>
     <section class="row controls" v-if="!gameIsRunning">
       <div class="small-12 columns">
-        <button id="start-game" @click="startGame">START NEW GAME</button>
+         <button-item
+          id="start-game"
+          :callback="startGame"
+          v-bind:label="labels.startGame"
+        />
       </div>
     </section>
     <section class="row controls" v-else>
@@ -78,6 +58,7 @@
 
 <script>
 import Button from "./components/Button.vue";
+import HealthBar from "./components/HealthBar.vue";
 export default {
   data: {
     playerHealth: 100,
@@ -91,10 +72,14 @@ export default {
       specialAttack: "SPECIAL ATTACK",
       heal: "HEAL",
       giveUp: "GIVE UP",
+      you: "YOU",
+      monster: "MONSTER",
+      startGame: "START NEW GAME"
     },
   },
   components: {
     "button-item": Button,
+    "health-bar": HealthBar
   },
   methods: {
     startGame: function () {
