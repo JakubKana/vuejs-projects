@@ -46,8 +46,8 @@
       <div class="small-12 columns">
         <ul>
           <li
-            :key="turn"
-            v-for="turn in turns"
+            :key="index"
+            v-for="(turn, index) in turns"
             :class="{
               'player-turn': turn.isPlayer,
               'monster-turn': !turn.isPlayer,

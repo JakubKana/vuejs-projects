@@ -8,9 +8,7 @@ describe("App.test.js", () => {
 
   beforeEach(() => {
     comp = Vue.extend(App);
-    vm = mount(App, {
 
-    })
     vm = new comp({
       data: function() {
         return {
@@ -37,10 +35,24 @@ describe("App.test.js", () => {
   describe("moves", () => {
     it("attack", () => {
 
+      vm.attack();
+      expect(vm.playerHealth).toBeLessThan(100);
     });
-    it("specialAttack", () => {});
-    it("heal", () => {});
-    it("giveUp", () => {});
+    it("specialAttack", () => {
+      vm.specialAttack();
+      expect(vm.monsterHealth).toBeLessThanOrEqual(90);
+    });
+    it("heal", () => {
+      vm.attack();
+      let currHealth = vm.playerHealth;
+      vm.heal();
+      expect(vm.playerHealth).toBeGreaterThanOrEqual(currHealth);
+    });
+    it("giveUp", () => {
+      vm.startGame();
+      vm.giveUp();
+      expect(vm.gameIsRunning).toEqual(false);
+    });
   });
 
   describe("data", () => {
